@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:'Listagem de Recados' /}
+
+<h1>Deixe seu Recado!</h1>
+
+#{form @Application.cadastrar()}
+	<p>
+		<label for="num1"><strong>Autor:</strong></label><br/>
+		<input type="text" name="autor" />
+	</p>
+	<p>
+		<label for="num1"><strong>Texto:</strong></label><br/>
+		<textarea name="texto" rows="8" cols="40"></textarea>
+	</p>
+	<input type="submit" name="enviar" value="Enviar Recado!" id="enviar">
+#{/form}
+
+<h1>Listagem de Recados</h1>
+
+#{if recados.size() == 0}
+	<p>Nenhum recado cadastrado.</p>
+#{/if}
+#{else}
+#{list items:recados, as:'recado'}
+	<div class="item-recados">
+		<p>Autor: ${recado.autor}</p>
+		<p>Texto: ${recado.texto}</p>
+		<p>${recado.gostei} pessoas gostaram deste recado! - <a href="@{Application.gostei(recado.id)}">Gostei!</a></p>
+		<p>${recado.naoGostei} pessoas não gostaram deste recado! - <a href="@{Application.naoGostei(recado.id)}">Gostei!</a></p>
+		<p><a href="@{Application.deletar(recado.id)}">Remover este comentário</a></p>
+	</div>
+	
+	<hr />
+#{/list}
+#{/else}
